@@ -1,4 +1,4 @@
-name: Notion Stock Price History (Hourly)
+name: Notion Price History (Every 10 Min)
 
 on:
   schedule:
@@ -22,10 +22,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Append history
+      - name: Append price history
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_TRADING_DB_ID: ${{ secrets.NOTION_TRADING_DB_ID }}
           NOTION_HISTORY_DB_ID: ${{ secrets.NOTION_HISTORY_DB_ID }}
           TIMEZONE: America/New_York
+          BUCKET_MINUTES: "10"
+          POINT_TYPE_VALUE: "10min"
         run: python append_price_history.py
